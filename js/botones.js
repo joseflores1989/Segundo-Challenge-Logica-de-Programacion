@@ -1,17 +1,32 @@
-var listaPalabras = ["CARRO, SALCHICHA, AMIGO, LOMBRIZ"];
+var listaPalabras = ["CARRO", "SALCHICHA", "AMIGO", "LOMBRIZ"];
 
 var botonAgregarPalabra = document.querySelector("#nueva-palabra");
 var botonIniciarJuego = document.querySelector("#iniciar-juego");
 
+function borrar(div){
+    var divSeleccionada = document.querySelector(div);
+    divSeleccionada.innerHTML = "";
+}
+
 botonIniciarJuego.addEventListener("click", function(event){
+    
     var palabraElegida = elegirPalabra(listaPalabras);
     var contador = 0;
-    //Cambio de pantalla
+    //document.body.innerHTML = "";
+    vaciarPantalla()
+    crearTablero(palabraElegida.length);
+
     document.addEventListener("keydown", (event) =>{
         var keyValue = event.key;
         if(validarLetra(keyValue)){
             contador ++;
-            indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
+            var indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
+            if(indicesLetraIngresada){
+                var xPosInit = 360;
+                for(var i = 0; i < indicesLetraIngresada.length; i++){
+                    dibujarLetra(keyValue, (xPosInit + 100*indicesLetraIngresada[i]) , 690)
+                }
+            }
     
         }
         
