@@ -1,11 +1,16 @@
 function validarTexto(string){
     var caracteresValidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    contieneCaracterInvalido = false;
-    for(var i=0; i < string.length; i++){
-        if(!caracteresValidos.includes(string[i])){
-            contieneCaracterInvalido = true;
+    var contieneCaracterInvalido = false;
+    if (string.length == 0){
+        contieneCaracterInvalido = true;
+    }else{
+        for(var i=0; i < string.length; i++){
+            if(!caracteresValidos.includes(string[i])){
+                contieneCaracterInvalido = true;
+            }
         }
     }
+
     if(contieneCaracterInvalido){
         return "Ingrese solamente mayúsculas sin tilde";
     }else{
