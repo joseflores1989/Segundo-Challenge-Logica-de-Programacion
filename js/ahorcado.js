@@ -7,7 +7,7 @@ function elegirPalabra(lista){
 }
 
 function validarLetra(letraIngresada){
-    var listaLetrasValidas = "ABCDEFGHIJKLMNOPQRSTUVWXZÑ";
+    var listaLetrasValidas = "ABCDEFGHIJKLMNOPQRSTUVWYXZÑ";
     return listaLetrasValidas.includes(letraIngresada);
 }
 
