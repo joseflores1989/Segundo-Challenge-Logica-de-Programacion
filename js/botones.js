@@ -11,27 +11,44 @@ function borrar(div){
 botonIniciarJuego.addEventListener("click", function(event){
     
     var palabraElegida = elegirPalabra(listaPalabras);
-    var contador = 0;
-    //document.body.innerHTML = "";
+    var contadorErrores = 0;
+    var contadorAciertos = 0;
     vaciarPantalla()
     crearTablero(palabraElegida.length);
-
+    var acumLetraIncorrecta = 0;
+    var listaLetrasIncorrectas = [];
     document.addEventListener("keydown", (event) =>{
         var keyValue = event.key;
-        if(validarLetra(keyValue)){
-            contador ++;
+        var alturaLetrasIncorrectas = 500;
+        var xLetrasIncorrectas = 500;
+        var xPosInit = 260;
+        if(validarLetra(keyValue) && contadorErrores < 9){
+
             var indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
-            if(indicesLetraIngresada){
-                var xPosInit = 360;
+            console.log(indicesLetraIngresada);
+            if(indicesLetraIngresada.length > 0){
                 for(var i = 0; i < indicesLetraIngresada.length; i++){
-                    dibujarLetra(keyValue, (xPosInit + 100*indicesLetraIngresada[i]) , 690)
+                    dibujarLetra(keyValue, (xPosInit + 100*indicesLetraIngresada[i]) , 690);
+                    contadorAciertos++;
                 }
-            }
-    
+            }else if(!listaLetrasIncorrectas.includes(keyValue)){
+                dibujarLetra(keyValue, xLetrasIncorrectas + acumLetraIncorrecta, alturaLetrasIncorrectas);
+                acumLetraIncorrecta += 60;
+                contadorErrores++;
+                listaLetrasIncorrectas.push(keyValue);
+                dibujarAhorcado(contadorErrores);
+            }  
         }
-        
-        
-        
+        if (contadorAciertos == palabraElegida.length){
+            dibujarFinDelJuego("Felicidades, ganaste", "green");
+            contadorErrores = 10;
+            return;
+        }
+
+        if (contadorErrores == 9){
+            dibujarFinDelJuego("Fin del juego", "red");
+            return;
+        }   
     }, false);
 
 })
