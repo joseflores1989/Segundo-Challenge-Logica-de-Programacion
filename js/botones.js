@@ -9,12 +9,10 @@ function borrar(div){
 }
 
 botonIniciarJuego.addEventListener("click", function(event){
-    
-    var palabraElegida = elegirPalabra(listaPalabras);
     var contadorErrores = 0;
     var contadorAciertos = 0;
-    vaciarPantalla()
-    crearTablero(palabraElegida.length);
+    vaciarPantalla();
+    var palabraElegida = crearTableroConAnimación();
     var acumLetraIncorrecta = 0;
     var listaLetrasIncorrectas = [];
     document.addEventListener("keydown", (event) =>{
@@ -23,7 +21,6 @@ botonIniciarJuego.addEventListener("click", function(event){
         var xLetrasIncorrectas = 500;
         var xPosInit = 260;
         if(validarLetra(keyValue) && contadorErrores < 9){
-
             var indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
             console.log(indicesLetraIngresada);
             if(indicesLetraIngresada.length > 0){
@@ -44,13 +41,11 @@ botonIniciarJuego.addEventListener("click", function(event){
             contadorErrores = 10;
             return;
         }
-
         if (contadorErrores == 9){
             dibujarFinDelJuego("Fin del juego", "red");
             return;
         }   
     }, false);
-
 })
 
 botonAgregarPalabra.addEventListener("click", function(event){
