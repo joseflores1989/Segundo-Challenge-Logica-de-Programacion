@@ -2,7 +2,6 @@ function crearPantalla(){
     return document.querySelector("canvas");
 }
 
-
 function crearPincel(color){
     var pantalla = crearPantalla();
     var pincel = pantalla.getContext("2d");
@@ -10,29 +9,57 @@ function crearPincel(color){
     return pincel;
 }
 
-function crearTriangulo(x, y, base, color){
-    var pincel = crearPincel(color);
-    pincel.beginPath();
-    pincel.moveTo(x, y);
-    pincel.lineTo(x + base, y);
-    pincel.lineTo((x + base/2), (y - base/4));
-    pincel.fill();
-}
-
-function hacerLineas(largo, cantidad){
+function hacerLineas(cantidad, y){
     var pincel = crearPincel("black");
     var acum = 0;
     for(i = 0; i < cantidad; i++){
-        pincel.fillRect(260 + acum, 693, largo, 7);
-        acum = acum + largo + 50;
+        pincel.fillRect(260 + acum, 693 + y, 50, 7);
+        acum = acum + 100;
     }
 
 }
 
-function crearTablero(cantidadDeLetras){
-    crearTriangulo(0, 700, 200, "black");
-    crearTriangulo(30, 693, 140, "white");
-    hacerLineas(50, cantidadDeLetras);
+function crearTriangulo(desplazamiento){
+    pincel = crearPincel("black");
+    pincel.strokeStyle = "black";
+    pincel.lineWidth = 5;
+    pincel.beginPath();
+    pincel.moveTo(0, 700 + desplazamiento);
+    pincel.lineTo(200, 700 + desplazamiento);
+    pincel.lineTo(100, 650 + desplazamiento);
+    pincel.lineTo(0, 700 + desplazamiento);
+    pincel.stroke();    
+}
+
+function limpiarPantalla(){
+    pincel = crearPincel("black");
+    pincel.clearRect(0, 0, 1200, 800);
+}
+
+function crearTablero(desplazamiento, cantidad, y){
+    crearTriangulo(desplazamiento);
+    hacerLineas(cantidad, y);
+}
+
+function actualizarPantalla(cantidad){
+    limpiarPantalla();
+    crearTablero(y, cantidad, y);
+    if(y > 0){
+        y--;
+    }else{
+        clearInterval(intervalo);
+    }
+}
+
+var y = 100;
+var intervalo = 0;
+
+function crearTableroConAnimación(){  
+    var palabraElegida = elegirPalabra(listaPalabras);
+    //var y = 100 
+    //intervalo = setInterval(actualizarPantalla, 5);
+    intervalo = setInterval( function() { actualizarPantalla(palabraElegida.length); }, 5);
+    return palabraElegida;
 }
 
 function vaciarPantalla(){
