@@ -9,6 +9,7 @@ function borrar(div){
 }
 
 botonIniciarJuego.addEventListener("click", function(event){
+    vaciarMsj("#msj-correcto");
     var contadorErrores = 0;
     var contadorAciertos = 0;
     vaciarPantalla();
