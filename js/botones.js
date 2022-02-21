@@ -10,18 +10,21 @@ function borrar(div){
 
 botonIniciarJuego.addEventListener("click", function(event){
     vaciarMsj("#msj-correcto");
+    vaciarMsj("#msj-error")
     var contadorErrores = 0;
     var contadorAciertos = 0;
     vaciarPantalla();
     var palabraElegida = crearTableroConAnimación();
     var acumLetraIncorrecta = 0;
     var listaLetrasIncorrectas = [];
+    var listaLetrasCorrectas = [];
     document.addEventListener("keydown", (event) =>{
         var keyValue = event.key;
         var alturaLetrasIncorrectas = 500;
         var xLetrasIncorrectas = 500;
         var xPosInit = 260;
-        if(validarLetra(keyValue) && contadorErrores < 9){
+        if(validarLetra(keyValue) && contadorErrores < 9 && !listaLetrasCorrectas.includes(keyValue)){
+            listaLetrasCorrectas.push(keyValue);
             var indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
             console.log(indicesLetraIngresada);
             if(indicesLetraIngresada.length > 0){
