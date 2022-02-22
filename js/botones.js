@@ -23,32 +23,34 @@ botonIniciarJuego.addEventListener("click", function(event){
         var alturaLetrasIncorrectas = 500;
         var xLetrasIncorrectas = 500;
         var xPosInit = 260;
-        if(validarLetra(keyValue) && contadorErrores < 9 && !listaLetrasCorrectas.includes(keyValue)){
-            listaLetrasCorrectas.push(keyValue);
-            var indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
-            console.log(indicesLetraIngresada);
-            if(indicesLetraIngresada.length > 0){
-                for(var i = 0; i < indicesLetraIngresada.length; i++){
-                    dibujarLetra(keyValue, (xPosInit + 100*indicesLetraIngresada[i]) , 690);
-                    contadorAciertos++;
-                }
-            }else if(!listaLetrasIncorrectas.includes(keyValue)){
-                dibujarLetra(keyValue, xLetrasIncorrectas + acumLetraIncorrecta, alturaLetrasIncorrectas);
-                acumLetraIncorrecta += 60;
-                contadorErrores++;
-                listaLetrasIncorrectas.push(keyValue);
-                dibujarAhorcado(contadorErrores);
+        if (y == 0){
+            if(validarLetra(keyValue) && contadorErrores < 9 && !listaLetrasCorrectas.includes(keyValue)){
+                listaLetrasCorrectas.push(keyValue);
+                var indicesLetraIngresada = buscarLetra(keyValue, palabraElegida);
+                console.log(indicesLetraIngresada);
+                if(indicesLetraIngresada.length > 0){
+                    for(var i = 0; i < indicesLetraIngresada.length; i++){
+                        dibujarLetra(keyValue, (xPosInit + 100*indicesLetraIngresada[i]) , 690);
+                        contadorAciertos++;
+                    }
+                }else if(!listaLetrasIncorrectas.includes(keyValue)){
+                    dibujarLetra(keyValue, xLetrasIncorrectas + acumLetraIncorrecta, alturaLetrasIncorrectas);
+                    acumLetraIncorrecta += 60;
+                    contadorErrores++;
+                    listaLetrasIncorrectas.push(keyValue);
+                    dibujarAhorcado(contadorErrores);
+                }  
+            }
+            if (contadorAciertos == palabraElegida.length){
+                dibujarFinDelJuego("Felicidades, ganaste", "green");
+                contadorErrores = 10;
+                return;
+            }
+            if (contadorErrores == 9){
+                dibujarFinDelJuego("Fin del juego", "red");
+                return;
             }  
         }
-        if (contadorAciertos == palabraElegida.length){
-            dibujarFinDelJuego("Felicidades, ganaste", "green");
-            contadorErrores = 10;
-            return;
-        }
-        if (contadorErrores == 9){
-            dibujarFinDelJuego("Fin del juego", "red");
-            return;
-        }   
     }, false);
 })
 
